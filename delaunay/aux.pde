@@ -1,12 +1,7 @@
 
 /*
-  DEVUELVE EL NOMBRE DE ARCHIVO CON LA FECHA
+  GUARDAMOS PDF
 */
-static final String get_file_name(final String name, final String ext) {
-  return name + "-" + year() + nf(month(), 2) + nf(day(), 2) +
-    nf(hour(), 2) + nf(minute(), 2) + nf(second(), 2) + ext;
-}
-
 void save_pdf() {
   beginRecord(PDF, get_file_name("", ".pdf"));
     int x, y;
@@ -23,4 +18,20 @@ void save_pdf() {
     }
     endRecord();
     println("PDF guardado.");
+}
+
+/*
+  GUARDAMOS PNG
+*/
+void save_png() {
+  saveFrame(get_file_name("", ".png"));
+  println("PNG guardado.");
+}
+
+/*
+  DEVUELVE EL NOMBRE DE ARCHIVO CON LA FECHA
+*/
+static final String get_file_name(final String name, final String ext) {
+  return "../exports/" + name + "-" + year() + nf(month(), 2) + nf(day(), 2) +
+    nf(hour(), 2) + nf(minute(), 2) + nf(second(), 2) + ext;
 }

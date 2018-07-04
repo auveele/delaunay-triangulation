@@ -93,7 +93,7 @@ void keyPressed() {
     recording = !recording; 
     break;
   case 'o':
-    saveFrame("screen-#####.png");
+    save_png();
     break;
   case 'p': 
     save_pdf();    
