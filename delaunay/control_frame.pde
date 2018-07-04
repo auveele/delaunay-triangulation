@@ -37,7 +37,8 @@ class ControlFrame extends PApplet {
         }
       }
     });
-       
+    
+    /*
     cp5.addToggle("calcular")
        .plugTo(parent, "calcular")
        .setPosition(10, 70)
@@ -78,7 +79,7 @@ class ControlFrame extends PApplet {
        .setValue(0.01)
        .setPosition(100, 240)
        .setSize(200, 30);
-       
+    */
   }
 
   void draw() {
