@@ -31,9 +31,9 @@ ControlFrame cf;
   MAIN SETUP
 */
 void setup() {
-  cf = new ControlFrame(this, 400, 800, "Control");
+  cf = new ControlFrame(this, 400, 800, "Triangulator v0.1");
   
-  maxPoints = 5000;
+  maxPoints = 10000;
   nbPoints = maxPoints;
   s = 8;
 
@@ -49,12 +49,13 @@ void fileSelected(File selection) {
     exit();
   } else {
     println("File selected: " + selection.getAbsolutePath());
+    cf.label_file_name.setValueLabel("lala");
 
     img = loadImage(selection.getAbsolutePath());
     //println(img.pixels.length);
     int x = img.width;
     int y = img.height;
-    frame.setSize(img.width, img.height);
+    surface.setSize(img.width, img.height);
 
     map     = createGraphics(x, y);
     draw    = createGraphics(x, y);

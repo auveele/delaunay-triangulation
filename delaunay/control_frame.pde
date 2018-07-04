@@ -3,6 +3,8 @@ class ControlFrame extends PApplet {
   int w, h;
   PApplet parent;
   ControlP5 cp5;
+  
+  Textlabel label_file_name;
 
   public ControlFrame(PApplet _parent, int _w, int _h, String _name) {
     super();   
@@ -20,6 +22,15 @@ class ControlFrame extends PApplet {
     surface.setLocation(10, 10);
     cp5 = new ControlP5(this);
     
+    /*
+      TITULO
+    */
+    Textlabel label_title = cp5.addTextlabel("title","TRIANGULATOR",100,10);
+    label_title.setColor(color(0));
+    
+    /*
+      BOTÓN CARGAR IMAGEN
+    */
     Button bt_load_image = cp5.addButton("CARGAMOS IMAGEN GUAPACA")
        .setPosition(10, 10)
        .setSize(100, 50);
@@ -37,6 +48,12 @@ class ControlFrame extends PApplet {
         }
       }
     });
+    
+    /*
+      NOMBRE FICHERO
+    */
+    label_file_name = cp5.addTextlabel("file_name","Imagen: ",10,10);
+    label_file_name.setColor(color(255));
     
     /*
     cp5.addToggle("calcular")
@@ -83,6 +100,7 @@ class ControlFrame extends PApplet {
   }
 
   void draw() {
-    background(190);
+    // background(190);
+    background(255);
   }
 }
