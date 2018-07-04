@@ -5,6 +5,7 @@ import toxi.geom.Polygon2D;
 import toxi.geom.mesh2d.Voronoi;
 import processing.pdf.*;
 import java.util.ArrayList;
+import controlP5.*;
 
 /* General variables */
 ArrayList<Triangle2D> triangles;
@@ -23,12 +24,15 @@ PVector position = new PVector(0, 0);// For moving the FBO.
 Vec2D worst;
 boolean recording;
 
+ControlFrame cf;
+
 
 /*
   MAIN SETUP
 */
 void setup() {
-  selectInput("Select an image to process...", "fileSelected");
+  cf = new ControlFrame(this, 400, 800, "Control");
+  
   maxPoints = 5000;
   nbPoints = maxPoints;
   s = 8;
