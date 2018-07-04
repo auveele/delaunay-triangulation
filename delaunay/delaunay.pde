@@ -31,9 +31,9 @@ ControlFrame cf;
   MAIN SETUP
 */
 void setup() {
-  cf = new ControlFrame(this, 400, 800, "Triangulator v0.1");
+  cf = new ControlFrame(this, 360, 720, "Triangulator v0.1");
   
-  maxPoints = 10000;
+  maxPoints = 20000;
   nbPoints = maxPoints;
   s = 8;
 
@@ -48,9 +48,14 @@ void fileSelected(File selection) {
     println("Window was closed or user canceled");
     exit();
   } else {
+    
+    String[] file_name = splitTokens(selection.getAbsolutePath(), System.getProperty("file.separator")); 
+    
     println("File selected: " + selection.getAbsolutePath());
-    cf.label_file_name.setValueLabel("lala");
-
+    cf.change_image_path(file_name[file_name.length - 1]);
+    
+    
+    
     img = loadImage(selection.getAbsolutePath());
     //println(img.pixels.length);
     int x = img.width;

@@ -1,11 +1,16 @@
 class ControlFrame extends PApplet {
 
+  int pxls_column = 30;
   int w, h;
   PApplet parent;
   ControlP5 cp5;
   
+  Textlabel label_title;
   Textlabel label_file_name;
-
+  Textlabel label_render_on;
+  Textlabel label_render_off;
+  Toggle toogle_render;
+  
   public ControlFrame(PApplet _parent, int _w, int _h, String _name) {
     super();   
     parent = _parent;
@@ -25,15 +30,20 @@ class ControlFrame extends PApplet {
     /*
       TITULO
     */
-    Textlabel label_title = cp5.addTextlabel("title","TRIANGULATOR",100,10);
-    label_title.setColor(color(0));
+    label_title = cp5.addTextlabel("title")
+      .setText("TRIANGULATOR")
+      .setPosition(get_pixel_from_column(2, 0),get_pixel_from_column(1, 0))
+      .setColor(color(0))
+      .setWidth(get_pixel_from_column(8, 0))
+      .setHeight(get_pixel_from_column(1, 0))
+      .setFont(createFont("Arial", 28));
     
     /*
       BOTÓN CARGAR IMAGEN
     */
-    Button bt_load_image = cp5.addButton("CARGAMOS IMAGEN GUAPACA")
-       .setPosition(10, 10)
-       .setSize(100, 50);
+    Button bt_load_image = cp5.addButton("CARGAMOS IMAGEN ...")
+       .setPosition(get_pixel_from_column(2, 0), get_pixel_from_column(3, 0))
+       .setSize(get_pixel_from_column(8, 0), get_pixel_from_column(1, 0));
        
     bt_load_image.addCallback(new CallbackListener() {
       public void controlEvent(CallbackEvent theEvent) {
@@ -52,9 +62,31 @@ class ControlFrame extends PApplet {
     /*
       NOMBRE FICHERO
     */
-    label_file_name = cp5.addTextlabel("file_name","Imagen: ",10,10);
-    label_file_name.setColor(color(255));
+    label_file_name = cp5.addTextlabel("file_name")
+      .setText("Imagen: ")
+      .setPosition(get_pixel_from_column(2, 0),get_pixel_from_column(4, 5))
+      .setColor(color(20))
+      .setFont(createFont("Arial", 10));
     
+    /*
+      BOTÓN RENDER
+    */
+    label_render_on = cp5.addTextlabel("render_on")
+      .setText("ON")
+      .setPosition(get_pixel_from_column(2, 0),get_pixel_from_column(20, 0))
+      .setColor(color(20))
+      .setFont(createFont("Arial", 22));
+    label_render_off = cp5.addTextlabel("render_off")
+      .setText("OFF")
+      .setPosition(get_pixel_from_column(8, 10),get_pixel_from_column(20, 0))
+      .setColor(color(20))
+      .setFont(createFont("Arial", 22));
+    toogle_render = cp5.addToggle("render")
+       .setPosition(get_pixel_from_column(2, 0), get_pixel_from_column(21, 0))
+       .setSize(get_pixel_from_column(8, 0), get_pixel_from_column(2, 0))
+       .setMode(ControlP5.SWITCH)
+       .setValue(false);
+       
     /*
     cp5.addToggle("calcular")
        .plugTo(parent, "calcular")
@@ -98,7 +130,23 @@ class ControlFrame extends PApplet {
        .setSize(200, 30);
     */
   }
-
+  
+  int get_pixel_from_column(int column, int offset) {
+    return (column * pxls_column) + offset;
+  }
+  
+  void change_image_path(String image_path){
+    label_file_name.setText("Imagen: " + image_path);
+  }
+  
+  void render(boolean theFlag){
+    if (theFlag == true) {
+      parent.loop();
+    } else {
+      parent.noLoop();
+    }
+  }
+  
   void draw() {
     // background(190);
     background(255);
