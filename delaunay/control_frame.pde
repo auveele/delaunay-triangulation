@@ -1,8 +1,8 @@
 /*
   
-  Ventana de control
-
-*/
+ Ventana de control
+ 
+ */
 class ControlFrame extends PApplet {
 
   int pxls_column = 30;
@@ -14,19 +14,19 @@ class ControlFrame extends PApplet {
   Textlabel label_file_name;
   Textlabel label_render_on;
   Textlabel label_render_off;
-  
+
   Textlabel label_iterations;
   Slider slider_iterations;
   Toggle toogle_render;
-  
-  
+
+
   //////AÑADIDO
   Bang save_pdf;
   /////////////
-  
-  
+
+
   Toggle toggle_mode;
-  
+
   Toggle toggle_render;
 
   public ControlFrame(PApplet _parent, int _w, int _h, String _name) {
@@ -48,7 +48,7 @@ class ControlFrame extends PApplet {
 
     /*
       TITULO
-    */
+     */
     label_title = cp5.addTextlabel("title")
       .setText("TRIANGULATOR")
       .setPosition(get_pixel_from_column(2, 0), get_pixel_from_column(1, 0))
@@ -59,11 +59,11 @@ class ControlFrame extends PApplet {
 
     /*
       BOTÓN CARGAR IMAGEN
-    */
+     */
     Button bt_load_image = cp5.addButton("CARGAMOS IMAGEN ...")
       .setPosition(get_pixel_from_column(2, 0), get_pixel_from_column(3, 0))
       .setSize(get_pixel_from_column(8, 0), get_pixel_from_column(1, 0));
-     
+
 
     bt_load_image.addCallback(new CallbackListener() {
       public void controlEvent(CallbackEvent theEvent) {         
@@ -82,32 +82,32 @@ class ControlFrame extends PApplet {
 
     /*
       NOMBRE FICHERO
-    */
+     */
     label_file_name = cp5.addTextlabel("file_name")
       .setText("Imagen: ")
       .setPosition(get_pixel_from_column(2, 0), get_pixel_from_column(4, 5))
       .setColor(color(20))
       .setFont(createFont("Arial", 10));
-      
+
     /*
       SLIDER
-    */
+     */
     label_iterations = cp5.addTextlabel("iterations_lbl")
       .setText("Iteraciones ")
       .setPosition(get_pixel_from_column(2, -5), get_pixel_from_column(5, 15))
       .setColor(color(20))
       .setFont(createFont("Arial", 10));
-      
+
     slider_iterations = cp5.addSlider("iterations")
-     .plugTo(parent, "nbPoints")
-     .setRange(0, 20000)
-     .setValue(5000)
-     .setPosition(get_pixel_from_column(2, 0), get_pixel_from_column(6, 0))
-     .setSize(get_pixel_from_column(8, 0), get_pixel_from_column(1, 0));
-    
+      .plugTo(parent, "nbPoints")
+      .setRange(0, 20000)
+      .setValue(5000)
+      .setPosition(get_pixel_from_column(2, 0), get_pixel_from_column(6, 0))
+      .setSize(get_pixel_from_column(8, 0), get_pixel_from_column(1, 0));
+
     /*
       MODE
-    */
+     */
     toggle_render = cp5.addToggle("render_mode")
       .plugTo(parent, "render_mode")
       .setPosition(get_pixel_from_column(4, 0), get_pixel_from_column(8, 0))
@@ -117,7 +117,7 @@ class ControlFrame extends PApplet {
 
     /*
       BOTÓN RENDER
-    */
+     */
     label_render_on = cp5.addTextlabel("render_on")
       .setText("RENDER")
       .setPosition(get_pixel_from_column(2, 0), get_pixel_from_column(18, 0))
@@ -134,84 +134,52 @@ class ControlFrame extends PApplet {
       .setMode(ControlP5.SWITCH)
       .setValue(false);
     setLock(cp5.getController("render"), true);
-    
-    
-    
- //////AÑADIDO   
-     /*
-      BOTÓN GUARDAR PDF
-    */
-save_pdf  = cp5.addBang("save_pdf")
-     .setPosition(40, 300)
-     .setSize(40, 40)
-     .setTriggerEvent(Bang.RELEASE)
-     .setLabel("GUARDAR PDF")
-     .setColorLabel(0)
-     ;
-}
-
-     /*
-      CONTROL DE EVENTOS
-    */
-public void controlEvent(ControlEvent theEvent) {      
-      if (theEvent.getController().getName().equals("save_pdf")) {
-      save_pdf();
-    }
-}
-///////////////
-
 
 
     /*
-    cp5.addToggle("calcular")
-     .plugTo(parent, "calcular")
-     .setPosition(10, 70)
-     .setSize(50, 50)
-     .setValue(false);
-     
-     cp5.addKnob("blend")
-     .plugTo(parent, "c3")
-     .setPosition(100, 300)
-     .setSize(200, 200)
-     .setRange(0, 255)
-     .setValue(200);
-     
-     cp5.addNumberbox("color-red")
-     .plugTo(parent, "c0")
-     .setRange(0, 255)
-     .setValue(255)
-     .setPosition(100, 10)
-     .setSize(100, 20);
-     
-     cp5.addNumberbox("color-green")
-     .plugTo(parent, "c1")
-     .setRange(0, 255)
-     .setValue(128)
-     .setPosition(100, 70)
-     .setSize(100, 20);
-     
-     cp5.addNumberbox("color-blue")
-     .plugTo(parent, "c2")
-     .setRange(0, 255)
-     .setValue(0)
-     .setPosition(100, 130)
-     .setSize(100, 20);
-     
-     cp5.addSlider("speed")
-     .plugTo(parent, "speed")
-     .setRange(0, 0.1)
-     .setValue(0.01)
-     .setPosition(100, 240)
-     .setSize(200, 30);
+      BOTÓN GUARDAR PDF
      */
+    save_pdf  = cp5.addBang("save_pdf")
+      // .plugTo(parent, "save_pdf")
+      .setPosition(40, 300)
+      .setSize(40, 40)
+      .setTriggerEvent(Bang.RELEASE)
+      .setLabel("GUARDAR PDF")
+      .setColorLabel(0);
+  }
 
+  /*
+      CONTROL DE EVENTOS - BAS
+   */
+  public void controlEvent(ControlEvent theEvent) {      
+    if (theEvent.getController().getName().equals("save_pdf")) {
+      // save_pdf();
+    }
+  }
   
-  
+  /* 
+      A ESTO ME REFIERO
+      Si pones el mismo nombre a la función que en addBand
+      ya lo trinca directamente.
+      
+      Así lo vinculas a una función de esta clase,
+      pero si lo pones con el .plugTo
+      puedes ponerle el parent, y vincularlo a una función
+      del sketch principal.
+      
+      Abajo tienes la función que trinca directa
+      y arriba en el BANG, comentado lo del Parent.
+  */
+  void save_pdf(boolean theFlag){
+    println("PULSADO");
+  }
 
   void change_image_path(String image_path) {
     label_file_name.setText("Imagen: " + image_path);
   }
+
   
+
   void render(boolean theFlag) {
     if (theFlag == true) {
       parent.loop();
@@ -224,7 +192,7 @@ public void controlEvent(ControlEvent theEvent) {
 
   /*
     BLOQUEAMOS ELEMENTOS
-  */
+   */
   void setLock(Controller theController, boolean theValue) {   
     if (theValue) {
       theController.lock();
@@ -236,10 +204,10 @@ public void controlEvent(ControlEvent theEvent) {
       // theController.setColorForeground(color(100, 100));
     }
   }
-  
+
   /*
     UTILIDAD COLUMNAS
-  */
+   */
   int get_pixel_from_column(int column, int offset) {
     return (column * pxls_column) + offset;
   }
@@ -247,6 +215,5 @@ public void controlEvent(ControlEvent theEvent) {
   void draw() {
     // background(190);
     background(255);
-    
   }
 }
