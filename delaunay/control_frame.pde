@@ -74,7 +74,7 @@ class ControlFrame extends PApplet {
       BOTÓN RENDER
      */
     label_render_on = cp5.addTextlabel("render_on")
-      .setText("ON")
+      .setText("RENDER")
       .setPosition(get_pixel_from_column(2, 0), get_pixel_from_column(20, 0))
       .setColor(color(20))
       .setFont(createFont("Arial", 22));
@@ -143,8 +143,10 @@ class ControlFrame extends PApplet {
   void render(boolean theFlag) {
     if (theFlag == true) {
       parent.loop();
+      label_render_off.setText("ON");
     } else {
       parent.noLoop();
+      label_render_off.setText("OFF");
     }
   }
 
