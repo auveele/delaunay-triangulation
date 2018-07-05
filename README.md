@@ -5,8 +5,8 @@
 
 
 ## Instrucciones de instalación
-- Descarga e instala el IDE de [**Processing 3**](https://processing.org/download/)
-- Descarga e instala manualmente la librería [**ToxicLibs**](http://toxiclibs.org/downloads/)
+- Descarga e instala el IDE de [**Processing 3**](https://processing.org/download/){:target="_blank"}
+- Descarga e instala manualmente la librería [**ToxicLibs**](http://toxiclibs.org/downloads/){:target="_blank"}
 - Desde el IDE de Processing, instala la librería **ControlP5**
 
 ## Cómo funciona
