@@ -1,7 +1,7 @@
 
 
 # Triangulator
-**IN DEVELOPMENT**. Polígoniza tu imagen mediante la triangulación de Delaunay.
+**IN DEVELOPMENT**. Poligoniza tu imagen mediante la triangulación de Delaunay.
 
 
 ## Instrucciones de instalación

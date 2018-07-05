@@ -10,21 +10,18 @@ class ControlFrame extends PApplet {
   PApplet parent;
   ControlP5 cp5;
 
+  /*
+    Declaramos elementos GUI
+  */
   Textlabel label_title;
   Textlabel label_file_name;
   Textlabel label_render_on;
   Textlabel label_render_off;
-
   Textlabel label_iterations;
   Slider slider_iterations;
   Toggle toogle_render;
-
-
-  //////AÑADIDO
-  Bang save_pdf;
-  Bang save_png;
-  /////////////
-
+  Bang bang_save_pdf;
+  Bang bang_save_png;
   Toggle toggle_mode;
   Toggle toggle_render;
 
@@ -122,7 +119,7 @@ class ControlFrame extends PApplet {
     /*
     BOTÓN GUARDAR PDF
      */
-    save_pdf  = cp5.addBang("save_pdf")
+    bang_save_pdf  = cp5.addBang("save_pdf")
       .plugTo(parent, "save_pdf")
       .setPosition(get_pixel_from_column(3, 0), get_pixel_from_column(20, 0))
       .setSize(get_pixel_from_column(2, 0), get_pixel_from_column(2, 0))
@@ -134,7 +131,7 @@ class ControlFrame extends PApplet {
     /*
     BOTÓN GUARDAR PNG
      */
-    save_png  = cp5.addBang("save_png")
+    bang_save_png  = cp5.addBang("save_png")
       .plugTo(parent, "save_png")
       .setPosition(get_pixel_from_column(7, 0), get_pixel_from_column(20, 0))
       .setSize(get_pixel_from_column(2, 0), get_pixel_from_column(2, 0))
@@ -160,8 +157,8 @@ class ControlFrame extends PApplet {
     // Habilitamos el botón de Render
     toggle_render.setLock(false);
     // Habilitamos el botón de Render
-    save_png.setLock(false);
-    save_pdf.setLock(false); 
+    bang_save_png.setLock(false);
+    bang_save_pdf.setLock(false); 
   }
 
   /*
