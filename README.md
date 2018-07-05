@@ -1,9 +1,7 @@
-En desarrollo.
+
 
 # Triangulator
-![status](https://img.shields.io/badge/status-in%20development-yellow.svg) ![license](https://img.shields.io/github/license/mashape/apistatus.svg?style=flat-square)
-
-Polígoniza tu imagen mediante la triangulación de Delaunay.
+**IN DEVELOPMENT**. Polígoniza tu imagen mediante la triangulación de Delaunay.
 
 
 ## Instrucciones de instalación
