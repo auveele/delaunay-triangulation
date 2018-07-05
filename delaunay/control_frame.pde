@@ -22,11 +22,10 @@ class ControlFrame extends PApplet {
 
   //////AÑADIDO
   Bang save_pdf;
+  Bang save_png;
   /////////////
 
-
   Toggle toggle_mode;
-
   Toggle toggle_render;
 
   public ControlFrame(PApplet _parent, int _w, int _h, String _name) {
@@ -60,25 +59,10 @@ class ControlFrame extends PApplet {
     /*
       BOTÓN CARGAR IMAGEN
      */
-    Button bt_load_image = cp5.addButton("CARGAMOS IMAGEN ...")
+    Button bt_load_image = cp5.addButton("load_image")
+      .setLabel("CARGAMOS IMAGEN ...")
       .setPosition(get_pixel_from_column(2, 0), get_pixel_from_column(3, 0))
       .setSize(get_pixel_from_column(8, 0), get_pixel_from_column(1, 0));
-
-
-    bt_load_image.addCallback(new CallbackListener() {
-      public void controlEvent(CallbackEvent theEvent) {         
-        switch(theEvent.getAction()) {
-          case(ControlP5.ACTION_PRESSED):
-          println("start");
-          break;
-          case(ControlP5.ACTION_RELEASED):
-          parent.selectInput("Select an image to process...", "fileSelected");
-          println("stop");
-          break;
-        }
-      }
-    }
-    );
 
     /*
       NOMBRE FICHERO
@@ -120,72 +104,76 @@ class ControlFrame extends PApplet {
      */
     label_render_on = cp5.addTextlabel("render_on")
       .setText("RENDER")
-      .setPosition(get_pixel_from_column(2, 0), get_pixel_from_column(18, 0))
+      .setPosition(get_pixel_from_column(2, 0), get_pixel_from_column(16, 0))
       .setColor(color(20))
       .setFont(createFont("Arial", 22));
     label_render_off = cp5.addTextlabel("render_off")
       .setText("OFF")
-      .setPosition(get_pixel_from_column(8, 10), get_pixel_from_column(18, 0))
+      .setPosition(get_pixel_from_column(8, 10), get_pixel_from_column(16, 0))
       .setColor(color(20))
       .setFont(createFont("Arial", 22));
     toggle_render = cp5.addToggle("render")
-      .setPosition(get_pixel_from_column(2, 0), get_pixel_from_column(19, 0))
+      .setPosition(get_pixel_from_column(2, 0), get_pixel_from_column(17, 0))
       .setSize(get_pixel_from_column(8, 0), get_pixel_from_column(2, 0))
       .setMode(ControlP5.SWITCH)
       .setValue(false);
     setLock(cp5.getController("render"), true);
-
-
+    
     /*
-      BOTÓN GUARDAR PDF
+    BOTÓN GUARDAR PDF
      */
     save_pdf  = cp5.addBang("save_pdf")
-      // .plugTo(parent, "save_pdf")
-      .setPosition(40, 300)
-      .setSize(40, 40)
+      .plugTo(parent, "save_pdf")
+      .setPosition(get_pixel_from_column(3, 0), get_pixel_from_column(20, 0))
+      .setSize(get_pixel_from_column(2, 0), get_pixel_from_column(2, 0))
       .setTriggerEvent(Bang.RELEASE)
       .setLabel("GUARDAR PDF")
-      .setColorLabel(0);
+      .setColorLabel(0)
+      .setLock(true);
+      
+    /*
+    BOTÓN GUARDAR PNG
+     */
+    save_png  = cp5.addBang("save_png")
+      .plugTo(parent, "save_png")
+      .setPosition(get_pixel_from_column(7, 0), get_pixel_from_column(20, 0))
+      .setSize(get_pixel_from_column(2, 0), get_pixel_from_column(2, 0))
+      .setTriggerEvent(Bang.RELEASE)
+      .setLabel("GUARDAR PNG")
+      .setColorLabel(0)
+      .setLock(true);
+
+    /*
+    FIN SETUP
+     */
   }
 
   /*
-      CONTROL DE EVENTOS - BAS
+    EVENTO - BOTÓN CARGAR IMAGEN
    */
-  public void controlEvent(ControlEvent theEvent) {      
-    if (theEvent.getController().getName().equals("save_pdf")) {
-      // save_pdf();
-    }
+  void load_image() {
+    parent.selectInput("Select an image to process...", "fileSelected");
   }
-  
-  /* 
-      A ESTO ME REFIERO
-      Si pones el mismo nombre a la función que en addBand
-      ya lo trinca directamente.
-      
-      Así lo vinculas a una función de esta clase,
-      pero si lo pones con el .plugTo
-      puedes ponerle el parent, y vincularlo a una función
-      del sketch principal.
-      
-      Abajo tienes la función que trinca directa
-      y arriba en el BANG, comentado lo del Parent.
-  */
-  void save_pdf(boolean theFlag){
-    println("PULSADO");
-  }
-
+  // AL CARGAR IMAGEN MODIFICAMOS LABEL
   void change_image_path(String image_path) {
     label_file_name.setText("Imagen: " + image_path);
+    // Habilitamos el botón de Render
+    toggle_render.setLock(false);
+    // Habilitamos el botón de Render
+    save_png.setLock(false);
+    save_pdf.setLock(false); 
   }
 
-  
-
+  /*
+    EVENTO - BOTÓN RENDER
+   */
   void render(boolean theFlag) {
+    rendering = true;
     if (theFlag == true) {
-      parent.loop();
+      render_on();
       label_render_off.setText("ON");
     } else {
-      parent.noLoop();
+      render_off();
       label_render_off.setText("OFF");
     }
   }

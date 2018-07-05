@@ -22,14 +22,17 @@ PGraphics draw;
 float outputRatio;
 PVector position = new PVector(0, 0);// For moving the FBO.
 Vec2D worst;
+
 boolean recording;
+boolean rendering = false;
+boolean render_mode;
 
 ControlFrame cf;
 
 static String[] file_path;  // Nombre de la imagen que cargas
 static String file_name;
 
-boolean render_mode;
+
 
 
 /*
@@ -89,8 +92,6 @@ void fileSelected(File selection) {
     
     // Ponemos el nombre de la imagen cargada en el Label
     cf.change_image_path(file_name);
-    // Habilitamos el botón de Render
-    cf.setLock(cf.cp5.getController("render"), false);   
     //loop();
   }
 }
