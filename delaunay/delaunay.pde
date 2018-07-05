@@ -25,7 +25,9 @@ Vec2D worst;
 
 boolean recording;
 boolean rendering = false;
+boolean drawing = false;
 boolean render_mode;
+boolean stroke_value;
 
 ControlFrame cf;
 
@@ -33,24 +35,19 @@ static String[] file_path;  // Nombre de la imagen que cargas
 static String file_name;
 
 
-
-
 /*
   MAIN SETUP
-*/
+ */
 void setup() {
   cf = new ControlFrame(this, 360, 720, "controlframe");
   surface.setTitle("Vista previa");
-  
-  maxPoints = 20000;
-  nbPoints = maxPoints;
+
   s = 8;
 
   // Tamaño inicial
   surface.setSize(500, 300);
   surface.setLocation(600, 200);
   recording = false;
-  noLoop();
 }
 
 void fileSelected(File selection) {
@@ -58,11 +55,11 @@ void fileSelected(File selection) {
     println("Window was closed or user canceled");
     exit();
   } else {
-    
+
     // Pillamos el nombre del fichero de la ruta absoluta
     file_path = splitTokens(selection.getAbsolutePath(), System.getProperty("file.separator"));
     file_name = file_path[file_path.length - 1];
-    
+
     // Cargamos imagen
     img = loadImage(selection.getAbsolutePath());
     // Redimensionamos ventana de Vista Previa
@@ -87,45 +84,19 @@ void fileSelected(File selection) {
     draw.beginDraw();
     draw.background(img);
     draw.endDraw();
-   
+
     img.loadPixels();
-    
+
     // Ponemos el nombre de la imagen cargada en el Label
     cf.change_image_path(file_name);
-    //loop();
-  }
-}
-
-/*
-  
-*/
-void keyPressed() {
-  switch(key) {
-  case 'd': 
-    println("Injecting...");
-    nbPoints = maxPoints;
-    loop();
-    break;
-  case 'c':
-    cubism(16, 0.02);
-    loop();
-    break;
-  case 'r': 
-    recording = !recording; 
-    break;
-  case 'o':
-    save_png();
-    break;
-  case 'p': 
-    save_pdf();    
-    break;
+    drawing = true;
   }
 }
 
 void draw() {
-  if (img == null) { 
-    return;
- }
+  if (img == null) return;
+  if (drawing == false) return;
+
   background(0);  
   int x, y;
   color c, ca, cb, cc;
@@ -137,36 +108,39 @@ void draw() {
     y = int(constrain(t.centroid.y, 0, img.height - 1));
     c = img.get(x, y);
     draw.fill(c);
-    draw.noStroke();
+    if (stroke_value == false) {
+      draw.noStroke();
+    } else {
+      draw.stroke(0);
+    }
     draw.triangle(t.a.x, t.a.y, t.b.x, t.b.y, t.c.x, t.c.y);
   }
   draw.endDraw();
 
-  if (nbPoints > 0) {
-    if (render_mode == false) {
-      worst = findWorstPixel();
-      println("Worst");
-    } else {
-      worst = maxDInRandom(3000);
-      println("Random");
+  if (rendering == true) {
+    if (nbPoints > 0) {
+      if (render_mode == false) {
+        worst = findWorstPixel();
+      } else {
+        worst = maxDInRandom(3000);
+      }
+
+      map.beginDraw();
+      map.noStroke();
+      map.fill(255);
+      map.ellipse(worst.x, worst.y, s, s);
+      //map.point(worst.x, worst.y);
+      map.endDraw();
+
+      vor.addPoint(new Vec2D(worst.x, worst.y));
+
+      --nbPoints;
+      cf.slider_iterations.setValue(nbPoints);
     }
-
-    map.beginDraw();
-    map.noStroke();
-    map.fill(255);
-    map.ellipse(worst.x, worst.y, s, s);
-    //map.point(worst.x, worst.y);
-    map.endDraw();
-
-    vor.addPoint(new Vec2D(worst.x, worst.y));
-    
-    --nbPoints;
-    cf.slider_iterations.setValue(nbPoints);
-    
   } else {
     println("done");
     cf.toggle_render.setValue(false);
-    noLoop();
+    // render_off();
   }
   image(draw, 0, 0);
 }

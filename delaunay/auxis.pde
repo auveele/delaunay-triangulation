@@ -1,9 +1,33 @@
+/*
+  PULSACIÓN DE TECLAS
+*/
+void keyPressed() {
+  switch(key) {
+  case 'd': 
+    render_on();
+    break;
+  case 'c':
+    cubism(16, 0.02);
+    // loop();
+    break;
+  case 'r': 
+    recording = !recording; 
+    break;
+  case 'o':
+    save_png();
+    break;
+  case 'p': 
+    save_pdf();    
+    break;
+  }
+}
+
 
 /*
   GUARDAMOS PDF
  */
 void save_pdf() {
-  if (rendering == true) noLoop();
+  if (rendering == true) stop();
   beginRecord(PDF, get_file_name(".pdf"));
   int x, y;
   color c;
@@ -19,27 +43,24 @@ void save_pdf() {
   }
   endRecord();
   println("PDF guardado.");
-  if (rendering == true) loop();
+  if (rendering == true) start();
 }
 
 /*
-  GUARDAMOS PNG
+  GUARDAMOS PNG 
  */
 void save_png() {
-  if (rendering == true) { 
-    noLoop();
-  }
+  if (rendering == true) stop();
   saveFrame(get_file_name(".png"));
   println("PNG guardado.");
-  if (rendering == true) { 
-    loop();
-  }
+  if (rendering == true) start();
 }
 
 /*
   INICIAMOS RENDER
  */
 void render_on() {
+  println("Iniciamos render");
   rendering = true;
   loop();
 }
@@ -48,6 +69,7 @@ void render_on() {
   STOP RENDER
  */
 void render_off() {
+  println("Fin render");
   rendering = false;
   noLoop();
 }

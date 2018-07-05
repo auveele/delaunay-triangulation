@@ -1,5 +1,6 @@
 
 void cubism(int nbPoints, float percent) {
+  println("C");
   for (int i = 0; i < nbPoints; ++i) {
     Vec2D v1 = new Vec2D(random(img.width), random(img.height));
     Vec2D v2 = new Vec2D(random(img.width), random(img.height));
@@ -14,6 +15,7 @@ void cubism(int nbPoints, float percent) {
       vor.addPoint(v1.interpolateTo(v2, p));
     }
   }
+  println("Fin");
 }
 
 /*

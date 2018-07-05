@@ -12,18 +12,18 @@ class ControlFrame extends PApplet {
 
   /*
     Declaramos elementos GUI
-  */
+   */
   Textlabel label_title;
   Textlabel label_file_name;
   Textlabel label_render_on;
   Textlabel label_render_off;
   Textlabel label_iterations;
   Slider slider_iterations;
-  Toggle toogle_render;
+  Toggle toggle_render;
+  Toggle toggle_stroke;
   Bang bang_save_pdf;
   Bang bang_save_png;
   Toggle toggle_mode;
-  Toggle toggle_render;
 
   public ControlFrame(PApplet _parent, int _w, int _h, String _name) {
     super();   
@@ -94,8 +94,21 @@ class ControlFrame extends PApplet {
       .setPosition(get_pixel_from_column(4, 0), get_pixel_from_column(8, 0))
       .setSize(get_pixel_from_column(4, 0), get_pixel_from_column(1, 0))
       .setMode(ControlP5.SWITCH)
+      .setValue(false)
+      .setLabel("SET MODE: RANDOM / WORST")
+      .setColorLabel(0);
+      
+    /*
+      STROKE
+     */
+    toggle_stroke = cp5.addToggle("toggle_stroke_value")
+      .plugTo(parent, "stroke_value")
+      .setPosition(get_pixel_from_column(3, 0), get_pixel_from_column(9, 0))
+      .setSize(get_pixel_from_column(1, 0), get_pixel_from_column(1, 0))
+      .setLabel("STROKE")
+      .setColorLabel(0)
       .setValue(false);
-
+      
     /*
       BOTÓN RENDER
      */
@@ -115,7 +128,7 @@ class ControlFrame extends PApplet {
       .setMode(ControlP5.SWITCH)
       .setValue(false);
     setLock(cp5.getController("render"), true);
-    
+
     /*
     BOTÓN GUARDAR PDF
      */
@@ -127,7 +140,7 @@ class ControlFrame extends PApplet {
       .setLabel("GUARDAR PDF")
       .setColorLabel(0)
       .setLock(true);
-      
+
     /*
     BOTÓN GUARDAR PNG
      */
@@ -158,7 +171,7 @@ class ControlFrame extends PApplet {
     toggle_render.setLock(false);
     // Habilitamos el botón de Render
     bang_save_png.setLock(false);
-    bang_save_pdf.setLock(false); 
+    bang_save_pdf.setLock(false);
   }
 
   /*
