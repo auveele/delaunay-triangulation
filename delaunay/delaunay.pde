@@ -26,6 +26,9 @@ boolean recording;
 
 ControlFrame cf;
 
+static String[] file_path;  // Nombre de la imagen que cargas
+static String file_name;
+
 
 /*
   MAIN SETUP
@@ -40,6 +43,7 @@ void setup() {
 
   // Tamaño inicial
   surface.setSize(500, 300);
+  surface.setLocation(600, 200);
   recording = false;
   noLoop();
 }
@@ -51,7 +55,9 @@ void fileSelected(File selection) {
   } else {
     
     // Pillamos el nombre del fichero de la ruta absoluta
-    String[] file_name = splitTokens(selection.getAbsolutePath(), System.getProperty("file.separator")); 
+    file_path = splitTokens(selection.getAbsolutePath(), System.getProperty("file.separator"));
+    file_name = file_path[file_path.length - 1];
+    
     // Cargamos imagen
     img = loadImage(selection.getAbsolutePath());
     // Redimensionamos ventana de Vista Previa
@@ -80,7 +86,7 @@ void fileSelected(File selection) {
     img.loadPixels();
     
     // Ponemos el nombre de la imagen cargada en el Label
-    cf.change_image_path(file_name[file_name.length - 1]);
+    cf.change_image_path(file_name);
     // Habilitamos el botón de Render
     cf.setLock(cf.cp5.getController("render"), false);   
     //loop();

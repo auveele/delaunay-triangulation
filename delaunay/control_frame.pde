@@ -32,7 +32,7 @@ class ControlFrame extends PApplet {
   }
 
   public void setup() {
-    surface.setLocation(10, 10);
+    surface.setLocation(200, 200);
     surface.setTitle("Triangulator v0.1");
     cp5 = new ControlP5(this);
 
@@ -100,16 +100,16 @@ class ControlFrame extends PApplet {
     */
     label_render_on = cp5.addTextlabel("render_on")
       .setText("RENDER")
-      .setPosition(get_pixel_from_column(2, 0), get_pixel_from_column(20, 0))
+      .setPosition(get_pixel_from_column(2, 0), get_pixel_from_column(18, 0))
       .setColor(color(20))
       .setFont(createFont("Arial", 22));
     label_render_off = cp5.addTextlabel("render_off")
       .setText("OFF")
-      .setPosition(get_pixel_from_column(8, 10), get_pixel_from_column(20, 0))
+      .setPosition(get_pixel_from_column(8, 10), get_pixel_from_column(18, 0))
       .setColor(color(20))
       .setFont(createFont("Arial", 22));
     toogle_render = cp5.addToggle("render")
-      .setPosition(get_pixel_from_column(2, 0), get_pixel_from_column(21, 0))
+      .setPosition(get_pixel_from_column(2, 0), get_pixel_from_column(19, 0))
       .setSize(get_pixel_from_column(8, 0), get_pixel_from_column(2, 0))
       .setMode(ControlP5.SWITCH)
       .setValue(false);

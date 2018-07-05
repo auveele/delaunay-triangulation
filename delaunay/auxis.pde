@@ -3,7 +3,7 @@
   GUARDAMOS PDF
 */
 void save_pdf() {
-  beginRecord(PDF, get_file_name("", ".pdf"));
+  beginRecord(PDF, get_file_name(".pdf"));
     int x, y;
     color c;
     for (Triangle2D t : vor.getTriangles ()) {
@@ -24,14 +24,14 @@ void save_pdf() {
   GUARDAMOS PNG
 */
 void save_png() {
-  saveFrame(get_file_name("", ".png"));
+  saveFrame(get_file_name(".png"));
   println("PNG guardado.");
 }
 
 /*
   DEVUELVE EL NOMBRE DE ARCHIVO CON LA FECHA
 */
-static final String get_file_name(final String name, final String ext) {
-  return "../exports/" + name + "-" + year() + nf(month(), 2) + nf(day(), 2) +
+static final String get_file_name(final String ext) {
+  return "../exports/" + file_name + "-" + year() + nf(month(), 2) + nf(day(), 2) +
     nf(hour(), 2) + nf(minute(), 2) + nf(second(), 2) + ext;
 }
