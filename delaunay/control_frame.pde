@@ -17,6 +17,14 @@ class ControlFrame extends PApplet {
   
   Textlabel label_iterations;
   Slider slider_iterations;
+  Toggle toogle_render;
+  
+  
+  //////AÑADIDO
+  Bang save_pdf;
+  /////////////
+  
+  
   Toggle toggle_mode;
   
   Toggle toggle_render;
@@ -55,9 +63,10 @@ class ControlFrame extends PApplet {
     Button bt_load_image = cp5.addButton("CARGAMOS IMAGEN ...")
       .setPosition(get_pixel_from_column(2, 0), get_pixel_from_column(3, 0))
       .setSize(get_pixel_from_column(8, 0), get_pixel_from_column(1, 0));
+     
 
     bt_load_image.addCallback(new CallbackListener() {
-      public void controlEvent(CallbackEvent theEvent) {
+      public void controlEvent(CallbackEvent theEvent) {         
         switch(theEvent.getAction()) {
           case(ControlP5.ACTION_PRESSED):
           println("start");
@@ -127,6 +136,31 @@ class ControlFrame extends PApplet {
     setLock(cp5.getController("render"), true);
     
     
+    
+ //////AÑADIDO   
+     /*
+      BOTÓN GUARDAR PDF
+    */
+save_pdf  = cp5.addBang("save_pdf")
+     .setPosition(40, 300)
+     .setSize(40, 40)
+     .setTriggerEvent(Bang.RELEASE)
+     .setLabel("GUARDAR PDF")
+     .setColorLabel(0)
+     ;
+}
+
+     /*
+      CONTROL DE EVENTOS
+    */
+public void controlEvent(ControlEvent theEvent) {      
+      if (theEvent.getController().getName().equals("save_pdf")) {
+      save_pdf();
+    }
+}
+///////////////
+
+
 
     /*
     cp5.addToggle("calcular")
@@ -170,7 +204,7 @@ class ControlFrame extends PApplet {
      .setPosition(100, 240)
      .setSize(200, 30);
      */
-  }
+
   
   
 
