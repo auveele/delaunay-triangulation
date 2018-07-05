@@ -31,14 +31,15 @@ ControlFrame cf;
   MAIN SETUP
 */
 void setup() {
-  cf = new ControlFrame(this, 360, 720, "Triangulator v0.1");
+  cf = new ControlFrame(this, 360, 720, "controlframe");
+  surface.setTitle("Vista previa");
   
   maxPoints = 20000;
   nbPoints = maxPoints;
   s = 8;
 
   // Tamaño inicial
-  size(200, 200);
+  surface.setSize(500, 300);
   recording = false;
   noLoop();
 }
@@ -50,11 +51,6 @@ void fileSelected(File selection) {
   } else {
     
     String[] file_name = splitTokens(selection.getAbsolutePath(), System.getProperty("file.separator")); 
-    
-    println("File selected: " + selection.getAbsolutePath());
-    cf.change_image_path(file_name[file_name.length - 1]);
-    
-    
     
     img = loadImage(selection.getAbsolutePath());
     //println(img.pixels.length);
@@ -81,6 +77,9 @@ void fileSelected(File selection) {
     draw.endDraw();
    
     img.loadPixels();
+    
+    cf.change_image_path(file_name[file_name.length - 1]);
+    cf.setLock(cf.cp5.getController("render"), false);   
     //loop();
   }
 }
