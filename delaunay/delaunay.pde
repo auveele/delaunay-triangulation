@@ -29,6 +29,8 @@ ControlFrame cf;
 static String[] file_path;  // Nombre de la imagen que cargas
 static String file_name;
 
+boolean render_mode;
+
 
 /*
   MAIN SETUP
@@ -140,8 +142,13 @@ void draw() {
   draw.endDraw();
 
   if (nbPoints > 0) {
-    worst = findWorstPixel();
-    // worst = maxDInRandom(3000);
+    if (render_mode == false) {
+      worst = findWorstPixel();
+      println("Worst");
+    } else {
+      worst = maxDInRandom(3000);
+      println("Random");
+    }
 
     map.beginDraw();
     map.noStroke();
@@ -157,7 +164,7 @@ void draw() {
     
   } else {
     println("done");
-    cf.toogle_render.setValue(false);
+    cf.toggle_render.setValue(false);
     noLoop();
   }
   image(draw, 0, 0);

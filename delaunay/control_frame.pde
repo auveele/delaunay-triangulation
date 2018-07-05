@@ -17,7 +17,9 @@ class ControlFrame extends PApplet {
   
   Textlabel label_iterations;
   Slider slider_iterations;
-  Toggle toogle_render;
+  Toggle toggle_mode;
+  
+  Toggle toggle_render;
 
   public ControlFrame(PApplet _parent, int _w, int _h, String _name) {
     super();   
@@ -93,7 +95,16 @@ class ControlFrame extends PApplet {
      .setValue(5000)
      .setPosition(get_pixel_from_column(2, 0), get_pixel_from_column(6, 0))
      .setSize(get_pixel_from_column(8, 0), get_pixel_from_column(1, 0));
-
+    
+    /*
+      MODE
+    */
+    toggle_render = cp5.addToggle("render_mode")
+      .plugTo(parent, "render_mode")
+      .setPosition(get_pixel_from_column(4, 0), get_pixel_from_column(8, 0))
+      .setSize(get_pixel_from_column(4, 0), get_pixel_from_column(1, 0))
+      .setMode(ControlP5.SWITCH)
+      .setValue(false);
 
     /*
       BOTÓN RENDER
@@ -108,7 +119,7 @@ class ControlFrame extends PApplet {
       .setPosition(get_pixel_from_column(8, 10), get_pixel_from_column(18, 0))
       .setColor(color(20))
       .setFont(createFont("Arial", 22));
-    toogle_render = cp5.addToggle("render")
+    toggle_render = cp5.addToggle("render")
       .setPosition(get_pixel_from_column(2, 0), get_pixel_from_column(19, 0))
       .setSize(get_pixel_from_column(8, 0), get_pixel_from_column(2, 0))
       .setMode(ControlP5.SWITCH)
