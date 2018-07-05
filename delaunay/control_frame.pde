@@ -9,6 +9,7 @@ class ControlFrame extends PApplet {
   Textlabel label_file_name;
   Textlabel label_render_on;
   Textlabel label_render_off;
+  Slider slider_iterations;
   Toggle toogle_render;
 
   public ControlFrame(PApplet _parent, int _w, int _h, String _name) {
@@ -73,7 +74,7 @@ class ControlFrame extends PApplet {
     /*
       SLIDER
     */
-    cp5.addSlider("iterations")
+    slider_iterations = cp5.addSlider("iterations")
      .plugTo(parent, "nbPoints")
      .setRange(500, 20000)
      .setValue(5000)
@@ -188,5 +189,6 @@ class ControlFrame extends PApplet {
   void draw() {
     // background(190);
     background(255);
+    
   }
 }

@@ -143,10 +143,12 @@ void draw() {
 
     vor.addPoint(new Vec2D(worst.x, worst.y));
     
-    println(nbPoints);
     --nbPoints;
+    cf.slider_iterations.setValue(nbPoints);
+    
   } else {
     println("done");
+    cf.toogle_render.setValue(false);
     noLoop();
   }
   image(draw, 0, 0);
