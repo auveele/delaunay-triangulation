@@ -1,8 +1,3 @@
-/*
-  
-  Ventana de control
-
-*/
 class ControlFrame extends PApplet {
 
   int pxls_column = 30;
@@ -38,7 +33,7 @@ class ControlFrame extends PApplet {
 
     /*
       TITULO
-    */
+     */
     label_title = cp5.addTextlabel("title")
       .setText("TRIANGULATOR")
       .setPosition(get_pixel_from_column(2, 0), get_pixel_from_column(1, 0))
@@ -49,7 +44,7 @@ class ControlFrame extends PApplet {
 
     /*
       BOTÓN CARGAR IMAGEN
-    */
+     */
     Button bt_load_image = cp5.addButton("CARGAMOS IMAGEN ...")
       .setPosition(get_pixel_from_column(2, 0), get_pixel_from_column(3, 0))
       .setSize(get_pixel_from_column(8, 0), get_pixel_from_column(1, 0));
@@ -71,7 +66,7 @@ class ControlFrame extends PApplet {
 
     /*
       NOMBRE FICHERO
-    */
+     */
     label_file_name = cp5.addTextlabel("file_name")
       .setText("Imagen: ")
       .setPosition(get_pixel_from_column(2, 0), get_pixel_from_column(4, 5))
@@ -97,7 +92,7 @@ class ControlFrame extends PApplet {
 
     /*
       BOTÓN RENDER
-    */
+     */
     label_render_on = cp5.addTextlabel("render_on")
       .setText("RENDER")
       .setPosition(get_pixel_from_column(2, 0), get_pixel_from_column(20, 0))

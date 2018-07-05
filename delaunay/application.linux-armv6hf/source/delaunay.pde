@@ -50,11 +50,10 @@ void fileSelected(File selection) {
     exit();
   } else {
     
-    // Pillamos el nombre del fichero de la ruta absoluta
     String[] file_name = splitTokens(selection.getAbsolutePath(), System.getProperty("file.separator")); 
-    // Cargamos imagen
+    
     img = loadImage(selection.getAbsolutePath());
-    // Redimensionamos ventana de Vista Previa
+    //println(img.pixels.length);
     int x = img.width;
     int y = img.height;
     surface.setSize(img.width, img.height);
@@ -79,9 +78,7 @@ void fileSelected(File selection) {
    
     img.loadPixels();
     
-    // Ponemos el nombre de la imagen cargada en el Label
     cf.change_image_path(file_name[file_name.length - 1]);
-    // Habilitamos el botón de Render
     cf.setLock(cf.cp5.getController("render"), false);   
     //loop();
   }
