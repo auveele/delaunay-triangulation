@@ -69,6 +69,17 @@ class ControlFrame extends PApplet {
       .setPosition(get_pixel_from_column(2, 0), get_pixel_from_column(4, 5))
       .setColor(color(20))
       .setFont(createFont("Arial", 10));
+      
+    /*
+      SLIDER
+    */
+    cp5.addSlider("iterations")
+     .plugTo(parent, "nbPoints")
+     .setRange(500, 20000)
+     .setValue(5000)
+     .setPosition(get_pixel_from_column(2, 0), get_pixel_from_column(6, 0))
+     .setSize(get_pixel_from_column(8, 0), get_pixel_from_column(1, 0));
+
 
     /*
       BOTÓN RENDER
@@ -89,6 +100,8 @@ class ControlFrame extends PApplet {
       .setMode(ControlP5.SWITCH)
       .setValue(false);
     setLock(cp5.getController("render"), true);
+    
+    
 
     /*
     cp5.addToggle("calcular")
