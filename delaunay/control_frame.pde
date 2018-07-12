@@ -138,7 +138,7 @@ public class ControlFrame extends PApplet {
       .plugTo(t, "show_fill_value")
       .setPosition(get_pixel_from_column(6, 0), get_pixel_from_column(10, 0))
       .setSize(get_pixel_from_column(1, 0), get_pixel_from_column(1, 0))
-      .setLabel("RELLENO")
+      .setLabel("FILL")
       .setColorLabel(0)
       .setValue(false);
     /*
