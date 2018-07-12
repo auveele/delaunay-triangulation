@@ -21,6 +21,20 @@ void keyPressed() {
   }
 }
 
+/*
+  ARRASTRAMOS RATON
+ */
+void mouseDragged() {
+  t.mouseDragged();
+}
+
+/*
+  CLICK RATON
+ */
+void mouseClicked() {
+  t.mouseClicked();
+}
+
 
 /*
   GUARDAMOS PDF

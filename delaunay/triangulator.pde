@@ -31,6 +31,9 @@ class Triangulator {
   boolean show_stroke_value;
   boolean show_vertex_value;
   boolean show_fill_value;
+  boolean show_background_value;
+  boolean draw_mouse;
+  int mouse_density_value;
 
 
   int nbPoints;
@@ -70,11 +73,13 @@ class Triangulator {
         // No quedan puntos que calcular
         render_off();
       }
-    } else {
+    }
+    /*else {
       // Rendering se pone a False
       println("FIN RENDER");
       cf.toggle_render.setValue(false);
     }
+    */
   }
 
   /*
@@ -85,6 +90,7 @@ class Triangulator {
     if (img == null) return;
     if (drawing == false) return;
 
+    background(120);
     draw_background();
     draw_triangles();
     draw_vertex();
@@ -94,11 +100,13 @@ class Triangulator {
       PINTAMOS FONDO
    */
   void draw_background() {
-    bg.beginDraw();
-    bg.clear();
-    bg.background(img);
-    bg.endDraw();
-    image(bg, 0, 0);
+    if (show_background_value == true) {
+      bg.beginDraw();
+      bg.clear();
+      bg.background(img);
+      bg.endDraw();
+      image(bg, 0, 0);
+    }
   }
 
   /*
@@ -125,7 +133,7 @@ class Triangulator {
         strokeWeight(stroke_size);
         draw.stroke(0);
       }
-      
+
       draw.triangle(tri.a.x, tri.a.y, tri.b.x, tri.b.y, tri.c.x, tri.c.y);
     }
     draw.endDraw();
@@ -232,6 +240,20 @@ class Triangulator {
     worst.y = (worstIndex - worst.x) / img.width;
 
     return worst;
+  }
+
+  /*
+    AÑADIMOS PUNTOS
+   */
+  void mouseDragged() {
+    if ((draw_mouse == true) && (random(100) < mouse_density_value)) {
+      vor.addPoint(new Vec2D(mouseX, mouseY));
+    }
+  }
+  void mouseClicked() {
+    if (draw_mouse == true) {
+      vor.addPoint(new Vec2D(mouseX, mouseY));
+    }
   }
 
   /*

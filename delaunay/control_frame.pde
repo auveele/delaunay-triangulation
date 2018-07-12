@@ -29,6 +29,9 @@ public class ControlFrame extends PApplet {
   Toggle toggle_mode;
   Toggle toggle_vertex;
   Toggle toggle_fill;
+  Toggle toggle_background;
+  Toggle toggle_draw_mouse;
+  Slider slider_mouse_density;
 
   // Variables
   boolean setup = false;
@@ -113,7 +116,7 @@ public class ControlFrame extends PApplet {
      */
     toggle_stroke = cp5.addToggle("toggle_stroke_value")
       .plugTo(t, "show_stroke_value")
-      .setPosition(get_pixel_from_column(3, 0), get_pixel_from_column(10, 0))
+      .setPosition(get_pixel_from_column(2, 0), get_pixel_from_column(10, 0))
       .setSize(get_pixel_from_column(1, 0), get_pixel_from_column(1, 0))
       .setLabel("STROKE")
       .setColorLabel(0)
@@ -123,7 +126,7 @@ public class ControlFrame extends PApplet {
      */
     toggle_vertex = cp5.addToggle("toggle_vertex_value")
       .plugTo(t, "show_vertex_value")
-      .setPosition(get_pixel_from_column(5, 0), get_pixel_from_column(10, 0))
+      .setPosition(get_pixel_from_column(4, 0), get_pixel_from_column(10, 0))
       .setSize(get_pixel_from_column(1, 0), get_pixel_from_column(1, 0))
       .setLabel("VERTEX")
       .setColorLabel(0)
@@ -133,11 +136,42 @@ public class ControlFrame extends PApplet {
      */
     toggle_fill = cp5.addToggle("toggle_fill_value")
       .plugTo(t, "show_fill_value")
-      .setPosition(get_pixel_from_column(7, 0), get_pixel_from_column(10, 0))
+      .setPosition(get_pixel_from_column(6, 0), get_pixel_from_column(10, 0))
       .setSize(get_pixel_from_column(1, 0), get_pixel_from_column(1, 0))
       .setLabel("RELLENO")
       .setColorLabel(0)
-      .setValue(true);
+      .setValue(false);
+    /*
+      PINTAMOS BACKGROUND
+     */
+    toggle_background = cp5.addToggle("toggle_background_value")
+      .plugTo(t, "show_background_value")
+      .setPosition(get_pixel_from_column(8, 0), get_pixel_from_column(10, 0))
+      .setSize(get_pixel_from_column(1, 0), get_pixel_from_column(1, 0))
+      .setLabel("BACKGROUND")
+      .setColorLabel(0)
+      .setValue(false);
+
+    /*
+      PODEMOS AÑADIR VÉRTICES  RATÓN
+     */
+    toggle_draw_mouse = cp5.addToggle("toggle_draw_mouse")
+      .plugTo(t, "draw_mouse")
+      .setPosition(get_pixel_from_column(4, 0), get_pixel_from_column(12, 0))
+      .setSize(get_pixel_from_column(4, 0), get_pixel_from_column(1, 0))
+      .setLabel("PINTAR CON RATON")
+      .setColorLabel(0)
+      .setValue(false);
+    /*
+      DENSIDAD RATÓN
+     */
+    slider_mouse_density = cp5.addSlider("slider_mouse_density_value")
+      .plugTo(t, "mouse_density_value")
+      .setRange(1, 100)
+      .setValue(50)
+      .setPosition(get_pixel_from_column(2, 0), get_pixel_from_column(14, 0))
+      .setSize(get_pixel_from_column(8, 0), get_pixel_from_column(1, 0));
+
 
     /*
       BOTÓN RENDER
@@ -230,6 +264,7 @@ public class ControlFrame extends PApplet {
     // t.rendering = theFlag;
     if (theFlag == true) {
       t.render_on();
+      toggle_fill.setValue(true);
     } else {
       t.render_off();
     }
