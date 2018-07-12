@@ -4,14 +4,14 @@
 void keyPressed() {
   switch(key) {
   case 'd': 
-    render_on();
+    t.render_on();
     break;
   case 'c':
-    cubism(16, 0.02);
+    t.cubism(16, 0.02);
     // loop();
     break;
   case 'r': 
-    recording = !recording; 
+    t.recording = !t.recording; 
     break;
   case 'o':
     save_png();
@@ -27,51 +27,33 @@ void keyPressed() {
   GUARDAMOS PDF
  */
 void save_pdf() {
-  if (rendering == true) stop();
+  if (t.rendering == true) stop();
   beginRecord(PDF, get_file_name(".pdf"));
   int x, y;
   color c;
-  for (Triangle2D t : vor.getTriangles ()) {
-    t.computeCentroid();
-    x = int(constrain(t.centroid.x, 0, img.width  - 1));
-    y = int(constrain(t.centroid.y, 0, img.height - 1));
-    c = img.get(x, y);
+  for (Triangle2D tri : t.vor.getTriangles ()) {
+    tri.computeCentroid();
+    x = int(constrain(tri.centroid.x, 0, t.img.width  - 1));
+    y = int(constrain(tri.centroid.y, 0, t.img.height - 1));
+    c = t.img.get(x, y);
 
     fill(c);
     noStroke();
-    triangle(t.a.x, t.a.y, t.b.x, t.b.y, t.c.x, t.c.y);
+    triangle(tri.a.x, tri.a.y, tri.b.x, tri.b.y, tri.c.x, tri.c.y);
   }
   endRecord();
   println("PDF guardado.");
-  if (rendering == true) start();
+  if (t.rendering == true) start();
 }
 
 /*
   GUARDAMOS PNG 
  */
 void save_png() {
-  if (rendering == true) stop();
+  if (t.rendering == true) stop();
   saveFrame(get_file_name(".png"));
   println("PNG guardado.");
-  if (rendering == true) start();
-}
-
-/*
-  INICIAMOS RENDER
- */
-void render_on() {
-  println("Iniciamos render");
-  rendering = true;
-  loop();
-}
-
-/*
-  STOP RENDER
- */
-void render_off() {
-  println("Fin render");
-  rendering = false;
-  noLoop();
+  if (t.rendering == true) start();
 }
 
 /*

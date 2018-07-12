@@ -3,8 +3,11 @@
  Ventana de control
  
  */
-class ControlFrame extends PApplet {
 
+import controlP5.*;
+
+public class ControlFrame extends PApplet {
+  // Atributos
   int pxls_column = 30;
   int w, h;
   PApplet parent;
@@ -24,6 +27,11 @@ class ControlFrame extends PApplet {
   Bang bang_save_pdf;
   Bang bang_save_png;
   Toggle toggle_mode;
+  Toggle toggle_vertex;
+  Toggle toggle_fill;
+
+  // Variables
+  boolean setup = false;
 
   public ControlFrame(PApplet _parent, int _w, int _h, String _name) {
     super();   
@@ -56,8 +64,10 @@ class ControlFrame extends PApplet {
     /*
       BOTÓN CARGAR IMAGEN
      */
-    Button bt_load_image = cp5.addButton("load_image")
+    Bang bang_load_image = cp5.addBang("load_image")
+      .setTriggerEvent(Bang.RELEASE)
       .setLabel("CARGAMOS IMAGEN ...")
+      .setColorLabel(0)
       .setPosition(get_pixel_from_column(2, 0), get_pixel_from_column(3, 0))
       .setSize(get_pixel_from_column(8, 0), get_pixel_from_column(1, 0));
 
@@ -66,7 +76,7 @@ class ControlFrame extends PApplet {
      */
     label_file_name = cp5.addTextlabel("file_name")
       .setText("Imagen: ")
-      .setPosition(get_pixel_from_column(2, 0), get_pixel_from_column(4, 5))
+      .setPosition(get_pixel_from_column(2, 0), get_pixel_from_column(5, 0))
       .setColor(color(20))
       .setFont(createFont("Arial", 10));
 
@@ -80,7 +90,7 @@ class ControlFrame extends PApplet {
       .setFont(createFont("Arial", 10));
 
     slider_iterations = cp5.addSlider("iterations")
-      .plugTo(parent, "nbPoints")
+      .plugTo(t, "nbPoints")
       .setRange(0, 20000)
       .setValue(5000)
       .setPosition(get_pixel_from_column(2, 0), get_pixel_from_column(6, 0))
@@ -97,27 +107,47 @@ class ControlFrame extends PApplet {
       .setValue(false)
       .setLabel("SET MODE: RANDOM / WORST")
       .setColorLabel(0);
-      
+
     /*
       STROKE
      */
     toggle_stroke = cp5.addToggle("toggle_stroke_value")
-      .plugTo(parent, "stroke_value")
-      .setPosition(get_pixel_from_column(3, 0), get_pixel_from_column(9, 0))
+      .plugTo(t, "show_stroke_value")
+      .setPosition(get_pixel_from_column(3, 0), get_pixel_from_column(10, 0))
       .setSize(get_pixel_from_column(1, 0), get_pixel_from_column(1, 0))
       .setLabel("STROKE")
       .setColorLabel(0)
       .setValue(false);
-      
+    /*
+      VERTEX
+     */
+    toggle_vertex = cp5.addToggle("toggle_vertex_value")
+      .plugTo(t, "show_vertex_value")
+      .setPosition(get_pixel_from_column(5, 0), get_pixel_from_column(10, 0))
+      .setSize(get_pixel_from_column(1, 0), get_pixel_from_column(1, 0))
+      .setLabel("VERTEX")
+      .setColorLabel(0)
+      .setValue(false);
+    /*
+      PINTAMOS TRIANGULOS
+     */
+    toggle_fill = cp5.addToggle("toggle_fill_value")
+      .plugTo(t, "show_fill_value")
+      .setPosition(get_pixel_from_column(7, 0), get_pixel_from_column(10, 0))
+      .setSize(get_pixel_from_column(1, 0), get_pixel_from_column(1, 0))
+      .setLabel("RELLENO")
+      .setColorLabel(0)
+      .setValue(true);
+
     /*
       BOTÓN RENDER
      */
-    label_render_on = cp5.addTextlabel("render_on")
+    label_render_on = cp5.addTextlabel("lbl_render_on")
       .setText("RENDER")
       .setPosition(get_pixel_from_column(2, 0), get_pixel_from_column(16, 0))
       .setColor(color(20))
       .setFont(createFont("Arial", 22));
-    label_render_off = cp5.addTextlabel("render_off")
+    label_render_off = cp5.addTextlabel("lbl_render_off")
       .setText("OFF")
       .setPosition(get_pixel_from_column(8, 10), get_pixel_from_column(16, 0))
       .setColor(color(20))
@@ -152,20 +182,39 @@ class ControlFrame extends PApplet {
       .setLabel("GUARDAR PNG")
       .setColorLabel(0)
       .setLock(true);
-
     /*
     FIN SETUP
      */
+    setup = true;
   }
 
   /*
-    EVENTO - BOTÓN CARGAR IMAGEN
+    CARGAMOS IMAGEN
    */
   void load_image() {
-    parent.selectInput("Select an image to process...", "fileSelected");
+    selectInput("Select an image", "imageChosen");
   }
+  // COMPROBAMOS IMAGEN CARGADA
+  void imageChosen( File f ) {
+    if ( f.exists() ) {
+      // Pillamos el nombre del fichero de la ruta absoluta
+      file_path = splitTokens(f.getAbsolutePath(), System.getProperty("file.separator"));
+      file_name = file_path[file_path.length - 1];
+      // Pasamosla imagen al triangulator
+      t.asign_image(f.getAbsolutePath());
+      // Ponemos el nombre de la imagen cargada en el Label
+      change_image_path(file_name);
+    } else {
+      // No existe
+      println("Window was closed or user canceled");
+      exit();
+    }
+  }
+
+
   // AL CARGAR IMAGEN MODIFICAMOS LABEL
   void change_image_path(String image_path) {
+    // Ponemos nombre de la imagen en label
     label_file_name.setText("Imagen: " + image_path);
     // Habilitamos el botón de Render
     toggle_render.setLock(false);
@@ -178,15 +227,14 @@ class ControlFrame extends PApplet {
     EVENTO - BOTÓN RENDER
    */
   void render(boolean theFlag) {
-    rendering = true;
+    // t.rendering = theFlag;
     if (theFlag == true) {
-      render_on();
-      label_render_off.setText("ON");
+      t.render_on();
     } else {
-      render_off();
-      label_render_off.setText("OFF");
+      t.render_off();
     }
   }
+
 
   /*
     BLOQUEAMOS ELEMENTOS
@@ -203,6 +251,24 @@ class ControlFrame extends PApplet {
     }
   }
 
+  
+  /*
+    UPDATE IN LOOP
+  */
+  void update() {
+    if (setup == false) return;
+    // Leemos los nbPoints y asignamos al valor
+    slider_iterations.setValue(t.nbPoints);
+    // Comprobamos rendering
+    if (t.rendering == true) {
+      label_render_off.setText("ON");
+      // toggle_render.setState(true);
+    } else {
+      label_render_off.setText("OFF");
+      // toggle_render.setState(false);
+    }
+  }
+  
   /*
     UTILIDAD COLUMNAS
    */
@@ -210,8 +276,10 @@ class ControlFrame extends PApplet {
     return (column * pxls_column) + offset;
   }
 
+  /*
+    DRAW CONTROL
+   */
   void draw() {
-    // background(190);
     background(255);
   }
 }
