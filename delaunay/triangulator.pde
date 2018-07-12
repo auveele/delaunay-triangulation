@@ -5,6 +5,8 @@ import toxi.geom.Polygon2D;
 import toxi.geom.mesh2d.Voronoi;
 import processing.pdf.*;
 import java.util.ArrayList;
+// import java.util.List<Vec2D>;
+// import java.util.List<Vec2D>;
 
 class Triangulator {
 
@@ -17,6 +19,7 @@ class Triangulator {
 
   // Imágenes
   public PImage img = null;
+  PGraphics bg;
   PGraphics map;
   PGraphics draw;
 
@@ -33,7 +36,8 @@ class Triangulator {
   int nbPoints;
   int maxPoints;
 
-  float s = 8;
+  float vertex_size = 5;
+  float stroke_size = 1;
   float outputRatio = 2.0; // creo que es para la Exportación
   PVector position = new PVector(0, 0);// For moving the FBO.
 
@@ -46,9 +50,11 @@ class Triangulator {
   void settings() {
   }
 
+  /*
+    CALCULAMOS PUNTOS VORONOID
+   */
   void update() {
     if (img == null) return;
-
     if (rendering == true) {
       if (nbPoints > 0) {
         if (render_mode == false) {
@@ -56,15 +62,18 @@ class Triangulator {
         } else {
           worst = maxDInRandom(3000);
         }
+        // Añadimos punto nuevo
         vor.addPoint(new Vec2D(worst.x, worst.y));
+        // Restamos al contador
         --nbPoints;
       } else {
+        // No quedan puntos que calcular
         render_off();
       }
     } else {
+      // Rendering se pone a False
       println("FIN RENDER");
       cf.toggle_render.setValue(false);
-      render_off();
     }
   }
 
@@ -76,43 +85,66 @@ class Triangulator {
     if (img == null) return;
     if (drawing == false) return;
 
-    background(0);  
+    draw_background();
+    draw_triangles();
+    draw_vertex();
+  }
+
+  /*
+      PINTAMOS FONDO
+   */
+  void draw_background() {
+    bg.beginDraw();
+    bg.clear();
+    bg.background(img);
+    bg.endDraw();
+    image(bg, 0, 0);
+  }
+
+  /*
+      PINTAMOS TRIANGULOS
+   */
+  void draw_triangles() {
     int x, y;
     color c; //, ca, cb, cc;
-
-    /*
-      PINTAMOS TRIANGULOS
-     */
     draw.beginDraw();
+    draw.clear();
     for (Triangle2D tri : vor.getTriangles ()) {
       tri.computeCentroid();
       x = int(constrain(tri.centroid.x, 0, img.width  - 1));
       y = int(constrain(tri.centroid.y, 0, img.height - 1));
       c = img.get(x, y);
-      if (show_fill_value == true) draw.fill(c);
+      if (show_fill_value == true) {
+        draw.fill(c);
+      } else {
+        draw.fill(0, 0);
+      }
       if (show_stroke_value == false) {
         draw.noStroke();
       } else {
+        strokeWeight(stroke_size);
         draw.stroke(0);
       }
+      
       draw.triangle(tri.a.x, tri.a.y, tri.b.x, tri.b.y, tri.c.x, tri.c.y);
     }
     draw.endDraw();
+    if ((show_fill_value == true) || (show_stroke_value == true)) image(draw, 0, 0);
+  }
 
-    /*
+  /*
       PINTAMOS PUNTOS
-     */
-    // map.background();
+   */
+  void draw_vertex() {
+    map.beginDraw();
+    map.clear();
+    map.noStroke();
+    map.fill(255);
     for (Vec2D w : vor.getSites ()) {
-      map.beginDraw();
-      map.noStroke();
-      map.fill(255);
-      map.ellipse(w.x, w.y, s, s);
+      map.ellipse(w.x, w.y, vertex_size, vertex_size);
       //map.point(worst.x, worst.y);
-      map.endDraw();
     }
-
-    image(draw, 0, 0);
+    map.endDraw();
     if (show_vertex_value == true) image(map, 0, 0);
   }
 
@@ -126,7 +158,7 @@ class Triangulator {
       Vec2D v2 = new Vec2D(random(img.width), random(img.height));
 
       map.beginDraw();
-      strokeWeight(s);
+      strokeWeight(stroke_size);
       stroke(255);
       line(v1.x, v1.y, v2.x, v2.y);
       map.endDraw();
@@ -213,6 +245,7 @@ class Triangulator {
     int y = img.height;
     surface.setSize(img.width, img.height);
 
+    bg     = createGraphics(x, y);
     map     = createGraphics(x, y);
     draw    = createGraphics(x, y);
 
@@ -234,13 +267,11 @@ class Triangulator {
   // INICIAMOS RENDER
   void render_on() {
     rendering = true;
-    loop();
     println("START RENDER");
   }
   // STOP RENDER
   void render_off() {
     rendering = false;
-    noLoop();
     println("STOP RENDER");
   }
 }

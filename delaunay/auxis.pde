@@ -1,6 +1,6 @@
 /*
   PULSACIÓN DE TECLAS
-*/
+ */
 void keyPressed() {
   switch(key) {
   case 'd': 
@@ -8,7 +8,6 @@ void keyPressed() {
     break;
   case 'c':
     t.cubism(16, 0.02);
-    // loop();
     break;
   case 'r': 
     t.recording = !t.recording; 

@@ -251,10 +251,10 @@ public class ControlFrame extends PApplet {
     }
   }
 
-  
+
   /*
     UPDATE IN LOOP
-  */
+   */
   void update() {
     if (setup == false) return;
     // Leemos los nbPoints y asignamos al valor
@@ -268,7 +268,7 @@ public class ControlFrame extends PApplet {
       // toggle_render.setState(false);
     }
   }
-  
+
   /*
     UTILIDAD COLUMNAS
    */

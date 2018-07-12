@@ -1,6 +1,4 @@
 
-
-
 ControlFrame cf;
 Triangulator t;
 
@@ -20,7 +18,6 @@ void setup() {
   surface.setTitle("Vista previa");
   surface.setSize(500, 300);
   surface.setLocation(600, 200);
-  noLoop();
 }
 
 /*
